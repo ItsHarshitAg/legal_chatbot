@@ -54,19 +54,9 @@ A modern, intelligent chatbot designed to assist with Indian legal questions, co
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables:
-   - Create a `.env` file in the root directory
-   - Add the following variables:
-     ```
-     FLASK_APP=src/app.py
-     FLASK_ENV=development
-     SECRET_KEY=your_secret_key
-     API_KEY=your_api_key_if_required
-     ```
-
-5. Run the application:
+4. Run the application:
    ```bash
-   flask run
+   python src/app.py
    ```
 
 6. Access the application at `http://localhost:5000`
