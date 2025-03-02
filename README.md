@@ -95,7 +95,7 @@ legal_chatbot/
 ├── requirements.txt            # Python dependencies
 ├── .env                        # Environment variables
 └── README.md                   # Documentation
-```
+````
 
 ## Limitations
 - The legal advice provided is for informational purposes only and not a substitute for professional legal counsel
