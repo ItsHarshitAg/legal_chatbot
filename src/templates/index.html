@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Legal Chatbot - Indian Legal Assistant</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Replace Font Awesome with a more reliable CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex justify-content-between align-items-center py-3">
+            <div>
+                <h1>Legal Chatbot</h1>
+                <p class="tagline">Your trusted Indian legal assistant</p>
+            </div>
+            <div class="user-info">
+                <span>Welcome, {{ user['displayName'] }} ({{ user['email'] }})</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-secondary btn-sm ml-2">Logout</a>
+                <button id="theme-toggle" class="btn btn-outline-secondary btn-sm ml-2" title="Toggle light/dark mode">
+                    <span id="theme-icon" class="fas fa-sun"></span>
+                    <span class="theme-label d-none d-md-inline-block ml-1">Light</span>
+                </button>
+            </div>
+        </header>
+        <main>
+            <div class="chat-container border rounded p-3 mb-3">
+                <div class="messages" id="messages">
+                    <!-- Initial welcome message -->
+                    <div class="message bot-message">
+                        Welcome to the Indian Legal Chatbot! How can I help you today? You can select a mode: 'tenancy agreement', 'contract', or 'legal question'.
+                    </div>
+                </div>
+                <div class="loader-container" id="loader-container">
+                    <div class="loader"></div>
+                    <p class="loader-text">Processing your legal question...</p>
+                </div>
+                <div class="input-group mt-3">
+                    <input type="text" id="user-input" class="form-control" placeholder="Type your message here...">
+                    <div class="input-group-append">
+                        <button id="send-btn" class="btn btn-primary">Send</button>
+                    </div>
+                </div>
+            </div>
+            <div class="mode-selection text-center">
+                <button class="mode-btn btn btn-outline-primary m-2" data-mode="tenancy agreement">Indian Tenancy Agreement</button>
+                <button class="mode-btn btn btn-outline-primary m-2" data-mode="contract">Indian Contract</button>
+                <button class="mode-btn btn btn-outline-primary m-2" data-mode="legal question">Indian Legal Question</button>
+            </div>
+        </main>
+        <footer class="mt-4 text-center text-muted">
+            <p>Disclaimer: This service provides general information and not professional legal advice. Always consult a licensed attorney for legal matters.</p>
+            <div class="developer-info mt-3">
+                <p class="mb-1">Developed by Harshit Agarwal, Christ University, Bangalore</p>
+                <div class="d-flex justify-content-center mt-2">
+                    <a href="https://www.linkedin.com/in/itsharshitag/" target="_blank" class="mr-3" title="LinkedIn Profile">
+                        <i class="fab fa-linkedin fa-lg"></i>
+                    </a>
+                    <a href="https://github.com/ItsHarshitAg" target="_blank" title="GitHub Profile">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

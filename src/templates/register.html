@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Register - Legal Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-container">
+            <div class="app-logo">
+                <h1>Legal Chatbot</h1>
+                <p>Your trusted Indian legal assistant</p>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-center">Create an Account</h3>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category if category != 'message' else 'danger' }}">
+                                    <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %} mr-2"></i>
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form method="POST" action="{{ url_for('register') }}" id="register-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" class="form-control" id="name" name="name" required value="{{ request.form.name if request.form else '' }}" placeholder="Enter your full name">
+                            </div>
+                            <div class="invalid-feedback" id="name-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                </div>
+                                <input type="email" class="form-control" id="email" name="email" required value="{{ request.form.email if request.form else '' }}" placeholder="Enter your email">
+                            </div>
+                            <div class="invalid-feedback" id="email-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input type="password" class="form-control" id="password" name="password" required placeholder="Create a password">
+                                <div class="input-group-append">
+                                    <span class="input-group-text toggle-password" style="cursor: pointer;" title="Show/hide password">
+                                        <i class="fas fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback" id="password-error"></div>
+                            <div class="password-requirements">
+                                <p>Password must contain:</p>
+                                <ul>
+                                    <li id="length-check">At least 8 characters</li>
+                                    <li id="uppercase-check">At least one uppercase letter</li>
+                                    <li id="lowercase-check">At least one lowercase letter</li>
+                                    <li id="number-check">At least one number</li>
+                                    <li id="special-check">At least one special character</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Confirm Password</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                </div>
+                                <input type="password" class="form-control" id="confirm-password" name="confirm_password" required placeholder="Confirm your password">
+                            </div>
+                            <div class="invalid-feedback" id="confirm-password-error"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="author-credits mt-4">
+                <div class="text-center">
+                    <p class="mb-2">Developed by Harshit Agarwal</p>
+                    <p class="mb-2">Christ University, Bangalore</p>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/itsharshitag/" target="_blank" class="social-link" title="LinkedIn Profile">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/ItsHarshitAg" target="_blank" class="social-link" title="GitHub Profile">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3" style="color: var(--light-text); font-size: 0.9rem;">
+                <p>© 2023 Legal Chatbot - All rights reserved</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/form-validation.js') }}"></script>
+    <script>
+        // Live password requirements checker
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const lengthCheck = document.getElementById('length-check');
+        const uppercaseCheck = document.getElementById('uppercase-check');
+        const lowercaseCheck = document.getElementById('lowercase-check');
+        const numberCheck = document.getElementById('number-check');
+        const specialCheck = document.getElementById('special-check');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            // Check length
+            if (password.length >= 8) {
+                lengthCheck.classList.add('requirement-met');
+                lengthCheck.classList.remove('requirement-failed');
+            } else {
+                lengthCheck.classList.add('requirement-failed');
+                lengthCheck.classList.remove('requirement-met');
+            }
+            
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                uppercaseCheck.classList.add('requirement-met');
+                uppercaseCheck.classList.remove('requirement-failed');
+            } else {
+                uppercaseCheck.classList.add('requirement-failed');
+                uppercaseCheck.classList.remove('requirement-met');
+            }
+            
+            // Check lowercase
+            if (/[a-z]/.test(password)) {
+                lowercaseCheck.classList.add('requirement-met');
+                lowercaseCheck.classList.remove('requirement-failed');
+            } else {
+                lowercaseCheck.classList.add('requirement-failed');
+                lowercaseCheck.classList.remove('requirement-met');
+            }
+            
+            // Check number
+            if (/[0-9]/.test(password)) {
+                numberCheck.classList.add('requirement-met');
+                numberCheck.classList.remove('requirement-failed');
+            } else {
+                numberCheck.classList.add('requirement-failed');
+                numberCheck.classList.remove('requirement-met');
+            }
+            
+            // Check special character
+            if (/[^A-Za-z0-9]/.test(password)) {
+                specialCheck.classList.add('requirement-met');
+                specialCheck.classList.remove('requirement-failed');
+            } else {
+                specialCheck.classList.add('requirement-failed');
+                specialCheck.classList.remove('requirement-met');
+            }
+            
+            // Check confirmation match
+            if (confirmPasswordInput.value && password !== confirmPasswordInput.value) {
+                document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
+                document.getElementById('confirm-password-error').style.display = 'block';
+                confirmPasswordInput.classList.add('is-invalid');
+            } else if (confirmPasswordInput.value) {
+                document.getElementById('confirm-password-error').style.display = 'none';
+                confirmPasswordInput.classList.remove('is-invalid');
+            }
+        });
+        
+        confirmPasswordInput.addEventListener('input', function() {
+            if (this.value && this.value !== passwordInput.value) {
+                document.getElementById('confirm-password-error').textContent = 'Passwords do not match';
+                document.getElementById('confirm-password-error').style.display = 'block';
+                this.classList.add('is-invalid');
+            } else {
+                document.getElementById('confirm-password-error').style.display = 'none';
+                this.classList.remove('is-invalid');
+            }
+        });
+
+        // Password toggle visibility
+        document.querySelector('.toggle-password').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    </script>
+</body>
+</html>
